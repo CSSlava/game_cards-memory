@@ -1,0 +1,33 @@
+@font-face {
+   font-family: 'Grames';
+   src: url('./assets/fonts/GRAMES.ttf');
+}
+
+
+* {
+   margin: 0;
+   padding: 0;
+}
+
+body {
+   background: lightblue;
+}
+
+canvas {
+   width: 100%;
+}
+
+.main-title {
+   text-transform: uppercase;
+   color: lightseagreen;
+   text-align: center;
+   margin: 2% 0;
+   font-family: 'Grames', sans-serif;
+}
+
+
+.fontPreload {
+   font-family: 'Grames';
+   position: absolute;
+   left: -100px;
+}
