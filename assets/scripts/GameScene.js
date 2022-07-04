@@ -85,10 +85,10 @@ class GameScene extends Phaser.Scene {
          timeout: this.sound.add('timeout'),
       };
 
-      // this.sounds.theme.play({
-      //    volume: 0.1,
-      //    loop: true,
-      // })
+      this.sounds.theme.play({
+         volume: 0.1,
+         loop: true,
+      })
    }
 
    createBackground() {
@@ -185,7 +185,7 @@ class GameScene extends Phaser.Scene {
 
    if (this.timeout <= 0) {
       this.timer.paused = true;
-      // this.sounds.timeout.play();
+      this.sounds.timeout.play();
       this.restart();
    } else {
       --this.timeout;
