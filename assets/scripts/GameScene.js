@@ -10,11 +10,17 @@ class GameScene extends Phaser.Scene {
       for (let i = 1; i < 6; i++) {
          this.load.image(`card_${i}`, `assets/img/card_${i}.png`);
       }
+
+      this.load.audio('theme', 'assets/sounds/theme.wav');
+      this.load.audio('card', 'assets/sounds/card.mp3');
+      this.load.audio('complete', 'assets/sounds/complete.mp3');
+      this.load.audio('success', 'assets/sounds/success.mp3');
+      this.load.audio('timeout', 'assets/sounds/timeout.mp3');
    }
 
    create() {
       this.timeout = config.timeout;
-
+      this.createSounds();
       this.createBackground();
       this.createTimer();
       this.createText();
@@ -37,6 +43,21 @@ class GameScene extends Phaser.Scene {
          card.close();
          card.setPosition(position.x, position.y);
       });
+   }
+
+   createSounds() {
+      this.sounds = {
+         card: this.sound.add('card'),
+         success: this.sound.add('success'),
+         complete: this.sound.add('complete'),
+         theme: this.sound.add('theme'),
+         timeout: this.sound.add('timeout'),
+      };
+
+      this.sounds.theme.play({
+         volume: 0.1,
+         loop: true,
+      })
    }
 
    createBackground() {
@@ -79,11 +100,14 @@ class GameScene extends Phaser.Scene {
       return false;
    }
 
+   this.sounds.card.play();
+
    if (this.openedCard) {
       if (this.openedCard.value === card.value) {
          // save opened cards
          this.openedCard = null;
          ++this.openedCardsCount;
+         this.sounds.complete.play();
       } else {
          // close opened card
          this.openedCard.close();
@@ -97,6 +121,7 @@ class GameScene extends Phaser.Scene {
    card.open();
 
    if (this.openedCardsCount === this.cards.length / 2) {
+      this.sounds.success.play();
       this.start();
    }
 
@@ -126,6 +151,7 @@ class GameScene extends Phaser.Scene {
    this.timeoutText.setText(`Time: ${this.timeout}`);
 
    if (this.timeout <= 0) {
+      this.sounds.timeout.play();
       this.start();
    } else {
       --this.timeout;
